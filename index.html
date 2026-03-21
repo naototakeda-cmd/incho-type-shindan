@@ -1344,28 +1344,6 @@ function showResult() {
   const firstSentence = type.staff_view.split('。')[0] + '。';
   document.getElementById('teaser-staff-view').textContent = firstSentence;
 
-  // 解除後コンテンツを先に準備（hidden）
-  document.getElementById('full-staff-view').innerHTML = type.staff_view.replace(/\n/g, '<br><br>');
-  document.getElementById('full-strengths').innerHTML = type.strengths.map(s => `<li>${s}</li>`).join('');
-  document.getElementById('full-cautions').innerHTML = type.cautions.map(c => `<li>${c}</li>`).join('');
-  document.getElementById('full-actions').innerHTML = type.actions.map(a => `
-    <div class="action-item">
-      <strong>▶ ${a.title}</strong>
-      <p>${a.body}</p>
-    </div>`).join('');
-  document.getElementById('full-psych-praise').textContent = type.deep_psych.praise;
-  document.getElementById('full-psych-insight').innerHTML = type.deep_psych.insight.replace(/\n/g, '<br><br>');
-  document.getElementById('full-service-intro').textContent = type.service_intro;
-  document.getElementById('full-service-items').innerHTML = type.service_items.map((item, i) => `
-    <div class="service-item">
-      <div class="service-item-num">${i + 1}</div>
-      <div class="service-item-body">
-        <strong>${item.title}</strong>
-        <p>${item.body}</p>
-      </div>
-    </div>`).join('');
-  document.getElementById('full-cta-headline').textContent = type.cta_headline;
-
   // 画面切り替え
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('result').style.display = 'block';
