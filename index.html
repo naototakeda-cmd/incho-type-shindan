@@ -913,22 +913,22 @@
             <input type="email" id="f-email" placeholder="example@email.com" required>
           </div>
           <button type="submit" class="btn-unlock">詳細レポートを受け取る →</button>
-          <p class="unlock-note">※ AIがレポートを生成してメールでお送りします（通常1〜2分）。スパムはありません。</p>
+          <p class="unlock-note">※ レポートを生成してメールでお送りします（通常1〜2分）。スパムはありません。</p>
         </form>
       </div>
     </div><!-- /unlock-gate -->
 
-    <!-- ===== AIローディング ===== -->
+    <!-- ===== ローディング ===== -->
     <div class="loading-area" id="loading-area">
       <div class="spinner"></div>
-      <div class="loading-title">AIが分析しています...</div>
+      <div class="loading-title">分析しています...</div>
       <div class="loading-sub">あなたの25問の回答をもとに、個別レポートを生成中です</div>
       <div class="loading-steps">
         <div class="loading-step step-active" id="step1">
           <span class="step-icon">📊</span> 回答データを解析中
         </div>
         <div class="loading-step" id="step2">
-          <span class="step-icon">🤖</span> AIが診断レポートを作成中
+          <span class="step-icon">📝</span> 診断レポートを作成中
         </div>
         <div class="loading-step" id="step3">
           <span class="step-icon">📩</span> メールに送信中
@@ -939,10 +939,10 @@
     <!-- ===== 送信完了 ===== -->
     <div class="success-area" id="success-area">
       <span class="success-icon">📬</span>
-      <div class="success-title">AIレポートを送信しました！</div>
+      <div class="success-title">レポートを送信しました！</div>
       <div class="success-sub">
         ご登録のメールアドレスに<br>
-        AIが生成した個別診断レポートをお送りしました。
+        個別診断レポートをお送りしました。
       </div>
       <div class="success-info-box">
         <p>
@@ -1414,12 +1414,11 @@ async function submitUnlock(e) {
     document.getElementById('step3').classList.add('step-active');
   }, 6000);
 
-  // GASへ送信（no-cors: レスポンスは読めないが送信はされる）
+  // GASへ送信（no-cors: Content-Typeヘッダーを省略することでtext/plainとして送信され、プリフライトを回避）
   try {
     await fetch(WEBHOOK_URL, {
       method : 'POST',
       mode   : 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify(payload)
     });
   } catch (_) {
