@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>歯科院長 組織・マネジメントタイプ診断</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background: #f5f7fa;
+    color: #2d3748;
+    line-height: 1.7;
+  }
+  .hero {
+    background: linear-gradient(135deg, #1a4d8c 0%, #0e7cbe 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 24px 50px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 13px;
+    margin-bottom: 18px;
+    letter-spacing: 0.05em;
+  }
+  .hero h1 {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 800;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 15px;
+    opacity: 0.9;
+    max-width: 500px;
+    margin: 0 auto 28px;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-size: 13px;
+    opacity: 0.85;
+    flex-wrap: wrap;
+  }
+  .progress-wrap {
+    background: white;
+    padding: 16px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #718096;
+    margin-bottom: 8px;
+  }
+  .progress-bar-bg {
+    background: #e2e8f0;
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1a4d8c, #0e7cbe);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .main { max-width: 680px; margin: 0 auto; padding: 32px 20px 80px; }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 36px 0 20px;
+  }
+  .section-label-badge {
+    background: #1a4d8c;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+  .section-label-text {
+    font-size: 14px;
+    color: #718096;
+    font-weight: 500;
+  }
+  .q-card {
+    background: white;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    transition: box-shadow 0.2s;
+  }
+  .q-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .q-card.answered { border-left: 3px solid #0e7cbe; }
+  .q-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0e7cbe;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 18px;
+    line-height: 1.6;
+  }
+  .scale-wrap { display: flex; gap: 8px; }
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 10px;
+    color: #a0aec0;
+  }
+  .scale-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+  .scale-btn input[type="radio"] { display: none; }
+  .scale-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #e2e8f0;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #a0aec0;
+    transition: all 0.15s;
+  }
+  .scale-btn:hover .scale-circle { border-color: #0e7cbe; color: #0e7cbe; background: #ebf8ff; }
+  .scale-btn input:checked ~ .scale-circle {
+    background: #0e7cbe;
+    border-color: #0e7cbe;
+    color: white;
+    transform: scale(1.1);
+  }
+  @media (max-width: 480px) {
+    .scale-circle { width: 32px; height: 32px; font-size: 11px; }
+    .scale-wrap { gap: 5px; }
+  }
+  .submit-area { text-align: center; margin-top: 40px; }
+  .submit-note { font-size: 13px; color: #a0aec0; margin-bottom: 16px; }
+  .btn-submit {
+    background: linear-gradient(135deg, #1a4d8c, #0e7cbe);
+    color: white;
+    border: none;
+    padding: 16px 48px;
+    font-size: 17px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(14,124,190,0.4);
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,124,190,0.4); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .warn { color: #e53e3e; font-size: 13px; text-align: center; margin-top: 12px; display: none; }
+
+  /* ===== RESULT ===== */
+  #result { display: none; }
+  .result-hero {
+    background: linear-gradient(135deg, #1a4d8c 0%, #0e7cbe 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 24px 50px;
+  }
+  .result-emoji { font-size: 64px; margin-bottom: 16px; display: block; }
+  .result-type-label {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .result-type-name {
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 900;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .result-catchcopy {
+    font-size: 15px;
+    opacity: 0.9;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .score-section {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin: 32px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .score-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #718096;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .score-bars { display: flex; flex-direction: column; gap: 14px; }
+  .score-row { display: flex; align-items: center; gap: 14px; }
+  .score-row-label { font-size: 12px; color: #4a5568; min-width: 110px; font-weight: 600; }
+  .score-bar-wrap { flex: 1; background: #e2e8f0; border-radius: 4px; height: 10px; overflow: hidden; }
+  .score-bar-inner { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #1a4d8c, #0e7cbe); transition: width 1s ease; width: 0; }
+  .score-val { font-size: 13px; font-weight: 700; color: #0e7cbe; min-width: 36px; text-align: right; }
+
+  /* ===== TEASER BLOCK ===== */
+  .teaser-block {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .teaser-text-wrap {
+    position: relative;
+    max-height: 90px;
+    overflow: hidden;
+  }
+  .teaser-text-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: linear-gradient(transparent, white);
+  }
+  .teaser-text-wrap p {
+    font-size: 14px;
+    line-height: 1.85;
+    color: #4a5568;
+  }
+
+  /* ===== UNLOCK GATE ===== */
+  #unlock-gate { margin-bottom: 0; }
+
+  .locked-preview-label {
+    text-align: center;
+    font-size: 13px;
+    color: #a0aec0;
+    margin-bottom: 14px;
+    letter-spacing: 0.03em;
+  }
+  .locked-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 480px) { .locked-cards-grid { grid-template-columns: 1fr; } }
+  .locked-card-wrap {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .locked-card-inner {
+    background: white;
+    border-radius: 12px;
+    padding: 18px 16px;
+    filter: blur(4px);
+    user-select: none;
+    pointer-events: none;
+  }
+  .locked-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .locked-card-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .locked-card-title { font-size: 13px; font-weight: 800; color: #1a202c; }
+  .locked-dummy-line {
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    margin-bottom: 7px;
+  }
+  .locked-dummy-line.short { width: 70%; }
+  .locked-dummy-line.shorter { width: 50%; }
+  .locked-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.55);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .locked-icon { font-size: 22px; }
+  .locked-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4a5568;
+    background: rgba(255,255,255,0.9);
+    padding: 2px 10px;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* ===== UNLOCK FORM BLOCK ===== */
+  .unlock-form-block {
+    background: white;
+    border-radius: 16px;
+    padding: 36px 28px;
+    box-shadow: 0 4px 24px rgba(14,124,190,0.15);
+    border: 2px solid #bfdbfe;
+    margin-bottom: 0;
+    text-align: center;
+  }
+  .unlock-badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .unlock-form-block h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .unlock-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0 24px;
+  }
+  .unlock-item {
+    background: #f0f7ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a4d8c;
+  }
+  .form-row { margin-bottom: 14px; text-align: left; }
+  .form-row label { display: block; font-size: 13px; font-weight: 600; color: #4a5568; margin-bottom: 5px; }
+  .form-row input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  .form-row input:focus { border-color: #0e7cbe; }
+  .btn-unlock {
+    width: 100%;
+    background: linear-gradient(135deg, #1a4d8c, #0e7cbe);
+    color: white;
+    border: none;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(14,124,190,0.4);
+  }
+  .btn-unlock:hover { transform: translateY(-2px); }
+  .unlock-note { font-size: 11px; color: #a0aec0; margin-top: 10px; }
+
+  /* ===== FULL RESULT (unlocked) ===== */
+  #full-result-area { display: none; }
+
+  /* Unlock success banner */
+  .unlock-success-banner {
+    background: linear-gradient(135deg, #065f46, #059669);
+    color: white;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .unlock-success-banner .check { font-size: 28px; }
+  .unlock-success-banner .msg strong { display: block; font-size: 15px; font-weight: 800; }
+  .unlock-success-banner .msg span { font-size: 13px; opacity: 0.88; }
+
+  /* ===== RESULT BLOCKS ===== */
+  .result-block {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .result-block-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #f0f4f8;
+  }
+  .result-block-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .result-block-title { font-size: 16px; font-weight: 800; color: #1a202c; }
+  .result-block p { font-size: 14px; line-height: 1.85; color: #4a5568; }
+  .result-block ul { padding-left: 0; list-style: none; }
+  .result-block ul li {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #4a5568;
+    padding: 8px 0 8px 20px;
+    position: relative;
+    border-bottom: 1px solid #f7fafc;
+  }
+  .result-block ul li:last-child { border-bottom: none; }
+  .result-block ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 16px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #0e7cbe;
+  }
+  .action-item {
+    background: #f0f7ff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-left: 3px solid #0e7cbe;
+  }
+  .action-item strong { display: block; font-size: 14px; color: #1a4d8c; margin-bottom: 4px; }
+  .action-item p { font-size: 13px; color: #4a5568; }
+
+  /* ===== DEEP PSYCH ===== */
+  .psych-block {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d1b5e 100%);
+    border-radius: 16px;
+    padding: 30px 26px;
+    margin-bottom: 20px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .psych-block::before {
+    content: '🔮';
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    font-size: 36px;
+    opacity: 0.15;
+  }
+  .psych-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .psych-badge {
+    background: rgba(167,139,250,0.3);
+    border: 1px solid rgba(167,139,250,0.5);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #c4b5fd;
+  }
+  .psych-title { font-size: 16px; font-weight: 800; }
+  .psych-praise {
+    background: rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.88);
+    border-left: 3px solid #a78bfa;
+  }
+  .psych-insight {
+    font-size: 14px;
+    line-height: 1.95;
+    color: rgba(255,255,255,0.82);
+  }
+  .psych-insight strong { color: #f0abfc; font-weight: 700; }
+
+  /* ===== SERVICE BLOCK ===== */
+  .service-block {
+    background: linear-gradient(135deg, #1a3a6c 0%, #0e6aab 100%);
+    border-radius: 16px;
+    padding: 32px 28px;
+    margin-bottom: 20px;
+    color: white;
+  }
+  .service-block-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+  .service-badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .service-block-title { font-size: 16px; font-weight: 800; }
+  .service-intro {
+    font-size: 14px;
+    line-height: 1.8;
+    opacity: 0.88;
+    margin-bottom: 20px;
+  }
+  .service-items { display: flex; flex-direction: column; gap: 12px; }
+  .service-item {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .service-item-num {
+    background: rgba(255,255,255,0.25);
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .service-item-body strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 4px; color: #bfdbfe; }
+  .service-item-body p { font-size: 13px; line-height: 1.75; opacity: 0.85; margin: 0; }
+
+  /* ===== CONSULT CTA ===== */
+  .consult-block {
+    background: white;
+    border-radius: 16px;
+    padding: 36px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .consult-block h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .consult-block .consult-sub {
+    font-size: 14px;
+    color: #718096;
+    margin-bottom: 24px;
+  }
+  .btn-consult {
+    display: inline-block;
+    background: linear-gradient(135deg, #1a4d8c, #0e7cbe);
+    color: white;
+    text-decoration: none;
+    padding: 18px 48px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(14,124,190,0.4);
+    cursor: pointer;
+    border: none;
+  }
+  .btn-consult:hover { transform: translateY(-2px); }
+  .consult-note { font-size: 12px; color: #a0aec0; margin-top: 12px; }
+
+  /* Icon colors */
+  .icon-purple { background: #f3e8ff; }
+  .icon-green  { background: #e6fffa; }
+  .icon-orange { background: #fffaf0; }
+  .icon-blue   { background: #ebf8ff; }
+  .icon-red    { background: #fff5f5; }
+
+  /* ===== LOADING STATE ===== */
+  .loading-area {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+  }
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #e2e8f0;
+    border-top-color: #0e7cbe;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 8px;
+  }
+  .loading-sub { font-size: 14px; color: #718096; }
+  .loading-steps {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .loading-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #4a5568;
+    background: #f7fafc;
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .step-icon { font-size: 16px; }
+  .step-active { color: #0e7cbe; font-weight: 600; background: #ebf8ff; }
+
+  /* ===== SUCCESS STATE ===== */
+  .success-area {
+    display: none;
+    background: white;
+    border-radius: 16px;
+    padding: 48px 28px;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+  .success-icon { font-size: 64px; margin-bottom: 16px; display: block; }
+  .success-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .success-sub {
+    font-size: 14px;
+    color: #718096;
+    margin-bottom: 28px;
+    line-height: 1.8;
+  }
+  .success-info-box {
+    background: #f0f7ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align: left;
+    margin-bottom: 24px;
+  }
+  .success-info-box p {
+    font-size: 13px;
+    color: #1a4d8c;
+    line-height: 1.8;
+  }
+  .success-info-box strong { font-weight: 700; }
+  .btn-back-top {
+    display: inline-block;
+    background: #f7fafc;
+    color: #4a5568;
+    border: 1px solid #e2e8f0;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-back-top:hover { background: #edf2f7; }
+</style>
+</head>
+<body>
+
+<!-- ===== QUIZ ===== -->
+<div id="quiz">
+  <div class="hero">
+    <div class="hero-badge">🦷 歯科院長向け 無料診断</div>
+    <h1>あなたの院長タイプは？<br>スタッフに"どう見られているか"<br>3分でわかる組織診断</h1>
+    <p>25の質問に答えるだけで、あなたのマネジメントの強み・課題・スタッフからの見られ方が丸わかり。</p>
+    <div class="hero-meta">
+      <span>📋 全25問</span>
+      <span>⏱ 所要時間：約3〜5分</span>
+      <span>🎯 6タイプ診断</span>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span id="prog-text">0 / 25 問 回答済み</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="prog-bar"></div>
+    </div>
+  </div>
+  <div class="main" id="questions-container"></div>
+</div>
+
+<!-- ===== RESULT ===== -->
+<div id="result">
+  <div class="result-hero">
+    <span class="result-emoji" id="r-emoji"></span>
+    <div class="result-type-label">あなたのタイプ</div>
+    <div class="result-type-name" id="r-name"></div>
+    <div class="result-catchcopy" id="r-catch"></div>
+  </div>
+
+  <div class="main">
+
+    <!-- スコアバー（常時表示） -->
+    <div class="score-section">
+      <div class="score-title">📊 あなたのスコア詳細</div>
+      <div class="score-bars">
+        <div class="score-row">
+          <div class="score-row-label">ビジョン・経営志向</div>
+          <div class="score-bar-wrap"><div class="score-bar-inner" id="bar-a"></div></div>
+          <div class="score-val" id="val-a"></div>
+        </div>
+        <div class="score-row">
+          <div class="score-row-label">育成・組織関与度</div>
+          <div class="score-bar-wrap"><div class="score-bar-inner" id="bar-b"></div></div>
+          <div class="score-val" id="val-b"></div>
+        </div>
+        <div class="score-row">
+          <div class="score-row-label">現場依存・完璧志向</div>
+          <div class="score-bar-wrap"><div class="score-bar-inner" id="bar-c"></div></div>
+          <div class="score-val" id="val-c"></div>
+        </div>
+        <div class="score-row">
+          <div class="score-row-label">採用・定着の課題感</div>
+          <div class="score-bar-wrap"><div class="score-bar-inner" id="bar-d"></div></div>
+          <div class="score-val" id="val-d"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ちょい出し：スタッフからの見られ方（冒頭のみ） -->
+    <div class="teaser-block">
+      <div class="result-block-header">
+        <div class="result-block-icon icon-purple">👥</div>
+        <div class="result-block-title">スタッフから見た、あなたの院長像</div>
+      </div>
+      <div class="teaser-text-wrap">
+        <p id="teaser-staff-view"></p>
+      </div>
+    </div>
+
+    <!-- アンロックゲート -->
+    <div id="unlock-gate">
+      <p class="locked-preview-label">▼ 残り4項目はメール登録で解除されます</p>
+
+      <!-- ロックされたカード（ブラー表示） -->
+      <div class="locked-cards-grid">
+        <div class="locked-card-wrap">
+          <div class="locked-card-inner">
+            <div class="locked-card-header">
+              <div class="locked-card-icon icon-green">⭐</div>
+              <div class="locked-card-title">マネジメントの強み</div>
+            </div>
+            <div class="locked-dummy-line"></div>
+            <div class="locked-dummy-line short"></div>
+            <div class="locked-dummy-line"></div>
+            <div class="locked-dummy-line shorter"></div>
+          </div>
+          <div class="locked-overlay">
+            <div class="locked-icon">🔒</div>
+            <div class="locked-label">解除で表示</div>
+          </div>
+        </div>
+        <div class="locked-card-wrap">
+          <div class="locked-card-inner">
+            <div class="locked-card-header">
+              <div class="locked-card-icon icon-orange">⚠️</div>
+              <div class="locked-card-title">注意点・課題</div>
+            </div>
+            <div class="locked-dummy-line"></div>
+            <div class="locked-dummy-line short"></div>
+            <div class="locked-dummy-line"></div>
+            <div class="locked-dummy-line shorter"></div>
+          </div>
+          <div class="locked-overlay">
+            <div class="locked-icon">🔒</div>
+            <div class="locked-label">解除で表示</div>
+          </div>
+        </div>
+        <div class="locked-card-wrap">
+          <div class="locked-card-inner">
+            <div class="locked-card-header">
+              <div class="locked-card-icon icon-blue">🎯</div>
+              <div class="locked-card-title">改善アクション</div>
+            </div>
+            <div class="locked-dummy-line"></div>
+            <div class="locked-dummy-line short"></div>
+            <div class="locked-dummy-line"></div>
+            <div class="locked-dummy-line shorter"></div>
+          </div>
+          <div class="locked-overlay">
+            <div class="locked-icon">🔒</div>
+            <div class="locked-label">解除で表示</div>
+          </div>
+        </div>
+        <div class="locked-card-wrap">
+          <div class="locked-card-inner">
+            <div class="locked-card-header">
+              <div class="locked-card-icon" style="background:#f3e8ff">🔮</div>
+              <div class="locked-card-title">あなたの深層心理</div>
+            </div>
+            <div class="locked-dummy-line"></div>
+            <div class="locked-dummy-line short"></div>
+            <div class="locked-dummy-line"></div>
+            <div class="locked-dummy-line shorter"></div>
+          </div>
+          <div class="locked-overlay">
+            <div class="locked-icon">🔒</div>
+            <div class="locked-label">解除で表示</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- メール取得フォーム -->
+      <div class="unlock-form-block">
+        <div class="unlock-badge">📩 無料 詳細レポート</div>
+        <h3>診断の全結果を受け取る</h3>
+        <p style="font-size:13px;color:#718096;margin-bottom:16px;">残り4項目の詳細レポートをメールでお送りします。<br>スタッフへの見られ方の全文・強み・課題・深層心理が全て解除されます。</p>
+        <div class="unlock-items">
+          <span class="unlock-item">✅ マネジメントの強み</span>
+          <span class="unlock-item">✅ 注意点・課題</span>
+          <span class="unlock-item">✅ 改善アクション3つ</span>
+          <span class="unlock-item">✅ あなたの深層心理</span>
+        </div>
+        <form id="unlock-form" onsubmit="submitUnlock(event)">
+          <div class="form-row">
+            <label>お名前 <span style="color:#e53e3e">*</span></label>
+            <input type="text" id="f-name" placeholder="山田 太郎" required>
+          </div>
+          <div class="form-row">
+            <label>医院名 <span style="color:#e53e3e">*</span></label>
+            <input type="text" id="f-clinic" placeholder="〇〇歯科クリニック" required>
+          </div>
+          <div class="form-row">
+            <label>メールアドレス <span style="color:#e53e3e">*</span></label>
+            <input type="email" id="f-email" placeholder="example@email.com" required>
+          </div>
+          <button type="submit" class="btn-unlock">詳細レポートを受け取る →</button>
+          <p class="unlock-note">※ AIがレポートを生成してメールでお送りします（通常1〜2分）。スパムはありません。</p>
+        </form>
+      </div>
+    </div><!-- /unlock-gate -->
+
+    <!-- ===== AIローディング ===== -->
+    <div class="loading-area" id="loading-area">
+      <div class="spinner"></div>
+      <div class="loading-title">AIが分析しています...</div>
+      <div class="loading-sub">あなたの25問の回答をもとに、個別レポートを生成中です</div>
+      <div class="loading-steps">
+        <div class="loading-step step-active" id="step1">
+          <span class="step-icon">📊</span> 回答データを解析中
+        </div>
+        <div class="loading-step" id="step2">
+          <span class="step-icon">🤖</span> AIが診断レポートを作成中
+        </div>
+        <div class="loading-step" id="step3">
+          <span class="step-icon">📩</span> メールに送信中
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 送信完了 ===== -->
+    <div class="success-area" id="success-area">
+      <span class="success-icon">📬</span>
+      <div class="success-title">AIレポートを送信しました！</div>
+      <div class="success-sub">
+        ご登録のメールアドレスに<br>
+        AIが生成した個別診断レポートをお送りしました。
+      </div>
+      <div class="success-info-box">
+        <p>
+          <strong>📋 レポートに含まれる内容</strong><br>
+          ✅ スタッフからの見られ方（全文）<br>
+          ✅ あなたのマネジメントの強み<br>
+          ✅ 注意点・改善すべき課題<br>
+          ✅ 今すぐできる改善アクション<br>
+          ✅ あなたの深層心理分析<br>
+          ✅ タイプ別の採用・定着改善プラン
+        </p>
+      </div>
+      <div class="success-sub" style="font-size:12px;color:#a0aec0;">
+        ※ メールが届かない場合は迷惑メールフォルダをご確認ください<br>
+        ※ 担当者より2営業日以内にご連絡いたします
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ===================== DATA =====================
+const SECTIONS = [
+  {
+    id: 'A', label: '軸A', desc: 'ビジョン・経営志向',
+    questions: [
+      '医院の3年後・5年後をイメージし、具体的なビジョンや目標を描いている。',
+      '売上・人件費・原価・稼働率などの経営数値を、定期的に確認・管理している。',
+      '医院の理念や価値観を言語化し、採用・教育・日常業務に活かせている。',
+      '院長としての自分の役割（診療以外の経営業務）を、スタッフに説明できる。',
+      '中長期的な採用計画（いつ・どんな人材を・何人）を意識して考えたことがある。',
+      '新しい取り組みや仕組みを医院に導入することに、前向きに取り組んでいる。',
+    ]
+  },
+  {
+    id: 'B', label: '軸B', desc: 'スタッフ育成・組織関与度',
+    questions: [
+      'スタッフの育成や教育に、意識的に時間とエネルギーを使っている。',
+      'スタッフ一人ひとりの強みや成長段階を把握して、仕事の任せ方を考えている。',
+      'スタッフと個別面談や1on1を定期的に実施している（または実施したいと思っている）。',
+      'スタッフが「ここで成長できる」と感じられるような環境を整えられていると思う。',
+      'スタッフへの感謝・承認・声かけを、日常的に意識して行っている。',
+      'スタッフが辞めた際、なぜ辞めたのかを振り返り、組織改善に活かすようにしている。',
+    ]
+  },
+  {
+    id: 'C', label: '軸C', desc: '現場依存・完璧主義傾向',
+    questions: [
+      '自分が診療から離れると、医院全体のクオリティやオペレーションが落ちると感じる。',
+      'スタッフに仕事を任せることへの不安や抵抗感がある。',
+      'スタッフが自分と同じ熱量・基準・姿勢で仕事に取り組んでくれないと感じる。',
+      '「なぜこんなことができないのか」とスタッフに対して感じることがある。',
+      '自分が忙しいとき、スタッフに対して感情的な言葉や態度が出てしまうことがある。',
+      'スタッフからの相談や報告が少なく、何を考えているか分からないと感じることがある。',
+    ]
+  },
+  {
+    id: 'D', label: '軸D', desc: '採用・定着への意識と行動',
+    questions: [
+      'スタッフの離職が続いて、採用・育成のサイクルに疲弊を感じたことがある。',
+      '求人票に書いている内容と、実際の職場環境の間にギャップがあると感じる。',
+      '入職後の受け入れ体制（オンボーディング・研修・フォロー）が十分に整っていると思う。',
+      '採用活動（求人・面接・選考設計）にもっと力を入れる必要があると感じている。',
+      '「また人が辞めた」「また採用しなければ」という状況が繰り返されていると感じる。',
+      'スタッフが「ここで長く働きたい」と思える医院になっていると自信を持って言える。',
+    ]
+  },
+  {
+    id: 'Z', label: '総括', desc: '全体を通じた自己評価',
+    questions: [
+      '院長としての自分のマネジメントや関わり方に、今の自分は満足している。',
+    ]
+  }
+];
+const REVERSE = { 'D-2': true, 'D-5': true };
+
+// ===================== TYPE DATA =====================
+const TYPES = {
+  type1: {
+    emoji: '🦅',
+    name: '孤高の名医タイプ',
+    catchcopy: '「あなたの腕は本物。でも、医院が"あなた一人"で成り立っている。」',
+    staff_view: `スタッフの目には、あなたは「技術は圧倒的に高いけれど、近寄りがたい存在」として映っている可能性があります。診療に妥協を許さないあなたの姿勢は、スタッフにとって誇りに思える一方で、「自分では届かない基準」として距離感を生みやすくなっています。\n\n「先生は何を考えているんだろう」「ミスをしたらどう思われるだろう」と感じているスタッフが少なくない可能性があります。`,
+    strengths: [
+      '診療の質が高く、患者・スタッフから技術面での信頼は厚い',
+      'ブレない軸があり、妥協しない姿勢が医院のブランドになっている',
+      '「本物を追求したい」という動機が、医院全体の品質を底上げしている',
+    ],
+    cautions: [
+      '技術基準が暗黙知化しており、スタッフが何を目指せばいいか分かりにくい',
+      '「見て覚えろ」的な関わり方が、育成のスピードを遅らせている可能性がある',
+      '院長が抜けた瞬間にパフォーマンスが落ちる「属人化リスク」が高い',
+      '離職理由として「成長ビジョンが見えない」「評価されている実感がない」が上位になりやすい',
+    ],
+    actions: [
+      { title: '「自分の基準を言葉にする」習慣を持つ', body: '頭の中にある"当たり前"を、スタッフが理解できる言葉で書き出してみましょう。何を大切にしているかが伝わるだけで、スタッフの行動が変わり始めます。' },
+      { title: '週1回、スタッフに一言フィードバックを伝える', body: '「今日のあの対応、良かったよ」という一言が、スタッフの定着率を大きく変えます。評価されている実感が、離職防止の最大の武器になります。' },
+      { title: '採用基準を「技術より価値観」で見直す', body: '高い基準についてこれる人材は少数です。「技術より、一緒に働いていける人かどうか」を採用軸に加えることで、入職後のミスマッチが減ります。' },
+    ],
+    service_intro: 'あなたの医院に必要なのは「技術が高い人を探す採用」ではなく、院長の価値観にフィットする人材を確実に定着させる仕組みです。弊社では以下の3つで貢献できます。',
+    service_items: [
+      { title: '採用ペルソナ設計', body: '院長の診療哲学・価値観を言語化し、カルチャーフィットを重視した「採用すべき人物像」を一緒に設計します。技術より人柄を見極める選考フローも構築します。' },
+      { title: '面接・選考フロー代行', body: '求人票作成からIndeed運用、応募者対応、面接調整まで一括代行。院長が「会いたい人だけに会える」採用体験を実現します。' },
+      { title: '入職後オンボーディング設計', body: '採用して終わりにしません。入職後90日間のフォローアップ面談設計と受け入れ体制の整備で、早期離職を防ぐ仕組みを一緒に作ります。' },
+    ],
+    cta_headline: '採用できても、すぐ辞めてしまう原因を一緒に解決しませんか？',
+    deep_psych: {
+      praise: '診療に全力を注ぐのは、患者さんへの深い責任感と誇りがあるから。その一途さと純粋な職業倫理は、多くの人が持ち合わせていないものです。妥協しないあなたの姿勢は、本物のプロフェッショナルの証です。',
+      insight: 'ただ、一つ問いかけさせてください。<strong>「他人を信頼しても、結局は裏切られる」と心のどこかで感じていないでしょうか。</strong>「自分がやった方が確実」という思考の奥には、人に頼ることへの恐怖や、過去に期待を裏切られた経験が積み重なっているかもしれません。\n\nそれは弱さではなく、真剣に向き合い続けてきた人だからこその傷です。ただ、<strong>その「信頼しない」という無意識の選択が、組織の成長を止め、あなた自身を孤独にしているとしたら</strong>——今が、変わるタイミングかもしれません。',
+    },
+  },
+  type2: {
+    emoji: '🔥',
+    name: 'カリスマ抱え込み院長タイプ',
+    catchcopy: '「熱量も、ビジョンも、能力も本物。でも全部、自分でやりすぎていませんか？」',
+    staff_view: `スタッフの目には、あなたは「すごいけど、ついていくのが大変な人」として映っている可能性があります。あなたの熱量と行動力は圧倒的で、「この先生のもとで働けることが誇らしい」と感じているスタッフがいる一方で、「自分たちがどこまで関わればいいか」「何を期待されているのか」が見えにくい状態になっているかもしれません。\n\nあなたが先回りしてやってしまうため、スタッフが「自分には関係ない仕事」と感じてしまったり、決定事項がいつも院長発信になっていたりしていないでしょうか。`,
+    strengths: [
+      'ビジョンが明確で、医院の方向性を力強くリードできる',
+      '行動力・判断力・スピードが高く、課題解決が速い',
+      'スタッフを惹きつけるカリスマ性があり、採用にも強みを発揮しやすい',
+    ],
+    cautions: [
+      '全てを自分で抱えるため、院長自身の疲弊とバーンアウトリスクが高い',
+      'スタッフが「考えなくてもいい環境」になりやすく、主体性が育ちにくい',
+      '院長が変わると医院の文化ごと変わってしまう「属人化した組織」になりやすい',
+      '採用→育成→定着の仕組みができていないため、スタッフの入れ替わりが激しくなりやすい',
+    ],
+    actions: [
+      { title: '「権限移譲リスト」を作る', body: '今自分がやっている業務のうち、スタッフに任せられるものをリストアップしましょう。「完璧でなくても任せる」という決断が、組織の自走力を生みます。' },
+      { title: 'スタッフの意見を「問いかける」場をつくる', body: '週1回のミーティングで「どう思う？」「他に方法はある？」と問いかけるだけで、スタッフの主体性と関与感が育ちます。' },
+      { title: '採用基準に「自走できるか」を加える', body: '言われたことをやる人材ではなく、自分で考えて動ける人材を採用軸に据えましょう。採用段階での見極めが、後の負担を大きく変えます。' },
+    ],
+    service_intro: 'あなたの熱量に共鳴し、かつ自走できる人材を採用・定着させる仕組みが必要です。弊社では以下の3つで貢献できます。',
+    service_items: [
+      { title: '採用軸の言語化・求人設計代行', body: '院長のビジョンをヒアリングし、「自分で考えて動ける人材」を引き寄せる求人票・採用メッセージを設計します。カリスマ院長の想いを、採用の言葉に変換します。' },
+      { title: '自走人材を見極める選考設計', body: '指示待ちではなく主体的に動ける人材を面接で見極めるための質問設計・評価基準を構築します。採用段階でのミスマッチを大幅に減らします。' },
+      { title: '入職後の役割定義・委任設計サポート', body: '採用後に「何を任せるか」を明確にするオンボーディング設計を支援。院長の負担を減らしながら、スタッフが早期に戦力化する仕組みを作ります。' },
+    ],
+    cta_headline: '熱量と仕組みをかけ合わせた採用を、一緒に設計しませんか？',
+    deep_psych: {
+      praise: '誰よりも医院を愛し、誰よりも本気で向き合ってきたあなたのエネルギーは、本物のリーダーシップの証です。その情熱があるから、スタッフもついてきている。あなたの存在そのものが、医院のエンジンです。',
+      insight: 'ただ、少し深いところを見てみましょう。<strong>「全部自分でやらないと気が済まない」という感覚の裏に、「自分がいなければこの医院は回らない」という確認を、無意識に求めていないでしょうか。</strong>誰かに任せて失敗したとき、自分の価値が揺らぐような感覚はありませんか。\n\nそれは「責任感」と見えますが、実は<strong>「必要とされていることへの依存」</strong>という側面を持つことがあります。あなたの価値は、あなたが動き続けることではなく、あなたがいなくても医院が成長していることに宿ります。',
+    },
+  },
+  type3: {
+    emoji: '📐',
+    name: '完璧主義職人院長タイプ',
+    catchcopy: '「自分の基準を下げたくない。でも、それがスタッフを追い詰めているかもしれない。」',
+    staff_view: `スタッフの目には、あなたは「怖い先生」か「何を考えているか分からない先生」として映っている可能性が高いです。細部へのこだわりと高い基準は、患者さんへの誠実さの表れである一方で、スタッフには「何をしても怒られる」「どこまでやればいいか分からない」という不安感を与えやすくなっています。\n\nスタッフが自発的に動けないのは、能力の問題だけでなく、「正解がわからないから動けない」という環境要因が大きいかもしれません。`,
+    strengths: [
+      '診療の質・患者対応・院内環境へのこだわりが強く、医院のブランド価値が高い',
+      '一度決めたことはやりきる粘り強さがある',
+      '「本物の仕事」を追求する姿勢が、長期的な患者満足度につながっている',
+    ],
+    cautions: [
+      '「なぜそうするのか」を伝えずに指示するため、スタッフが意味を理解できていない',
+      '感情的なフィードバックがスタッフの萎縮・離職につながりやすい',
+      '採用で「自分と似た人材」を求めすぎるため、採用のハードルが高くなりがち',
+      'スタッフが「成長できる環境」だと感じにくく、1〜2年での離職率が上がる傾向がある',
+    ],
+    actions: [
+      { title: '「なぜそうするのか」を1言添える習慣をつける', body: '「こうしてください」の後に「患者さんが○○だから」という理由を一言加えるだけで、スタッフの理解度と納得感が大きく変わります。' },
+      { title: '「できていること」を先に言う', body: 'フィードバックの順番を「良い点→改善点」に変えるだけで、スタッフの受け取り方が変わり、関係性が改善します。' },
+      { title: '採用では「成長意欲」を重視する', body: '最初から完璧な人材は存在しません。「伸びしろと素直さ」を採用基準に加えることで、育てながら戦力化できる人材との出会いが増えます。' },
+    ],
+    service_intro: '「基準が高すぎて採用できない」「採用できても定着しない」このサイクルを断ち切るために、弊社では以下の3つで貢献できます。',
+    service_items: [
+      { title: '採用要件の現実的な翻訳・人物像設計', body: '院長の高い基準を尊重しながら、現実的に出会える人材像に落とし込みます。「理想の人材が来ない」ではなく、「出会える採用設計」に変えます。' },
+      { title: 'リアルな職場情報の発信設計', body: '求人票と実際の職場のギャップを埋めるため、院長の想いや職場の雰囲気を正直に伝えるメッセージ設計を行います。ミスマッチ入職を根本から防ぎます。' },
+      { title: 'スタッフが「育てられている」と感じるオンボーディング', body: '入職後に院長の基準を丁寧に伝える受け入れ設計を構築。スタッフが「ここで成長できる」と感じ、定着につながる仕組みを一緒に作ります。' },
+    ],
+    cta_headline: '「採用できない」「定着しない」を同時に解決する方法があります',
+    deep_psych: {
+      praise: '細部にまでこだわり、絶対に妥協しない。その姿勢の根底には、患者さんへの深い誠実さと、仕事に対する本物のプロ意識があります。あなたの基準の高さは、医院の誇りそのものです。',
+      insight: 'ただ、正直にお伝えします。<strong>その完璧主義の裏に、「自分が批判されることへの強い恐怖」が隠れていないでしょうか。</strong>スタッフのミスに強く反応してしまうのは、相手への失望ではなく、「自分の医院の評価が下がることへの不安」が投影されているのかもしれません。\n\nまた、<strong>「人を深く信頼すると、いつか傷つく」という経験から、無意識に心の距離を置いている</strong>ことはないでしょうか。繊細で自分に厳しいあなただからこそ、他者にも同じ厳しさを向けてしまう——それが、スタッフとの間に見えない壁を作っている可能性があります。',
+    },
+  },
+  type4: {
+    emoji: '🌱',
+    name: '育成型リーダー院長タイプ',
+    catchcopy: '「スタッフへの思いやりは本物。あとは、その優しさを"仕組み"に変える一歩。」',
+    staff_view: `スタッフの目には、あなたは「話しやすくて、気にかけてくれる先生」として映っている可能性が高いです。面談や声かけを大切にするあなたの姿勢は、スタッフの安心感と信頼感につながっています。「この医院は居心地がいい」と感じているスタッフが多いタイプです。\n\n一方で、「優しすぎて物事が決まらない」「院長に意見しても変わらない」と感じているスタッフがいる可能性も。医院全体の方向性（ビジョン）が見えにくいと感じているスタッフがいるかもしれません。`,
+    strengths: [
+      'スタッフの心理的安全性が高く、チームの雰囲気がいい',
+      '離職率が比較的低く、長期勤務スタッフが生まれやすい',
+      'スタッフとの信頼関係ができているため、組織改善施策を展開しやすい',
+    ],
+    cautions: [
+      'ビジョンや方向性の発信が弱く、スタッフが「医院がどこへ向かっているか」を感じにくいことがある',
+      '「良い人」止まりで、スタッフへの成長要求（ストレッチ）が不足しやすい',
+      '採用・経営数値への意識が薄くなりやすく、「気づいたら人が足りない」という事態になりやすい',
+    ],
+    actions: [
+      { title: '「医院が目指す姿」を言葉にしてスタッフに伝える', body: 'チームの雰囲気の良さを成果につなげるためには方向性の明示が必要です。「この医院は3年後にこうなる」という言葉が、スタッフの意欲を引き出します。' },
+      { title: '育成目標を「役割＋期待値」で伝える', body: '「〇〇さんには半年後にこのレベルになってほしい」という期待を伝えることで、スタッフの成長意欲が高まります。' },
+      { title: '採用を"仕組み"として整える', body: '人間関係が良い医院は採用にも強みがありますが、採用活動が場当たり的だと機会損失が続きます。定期的な採用活動の仕組みを整えましょう。' },
+    ],
+    service_intro: 'あなたの医院にはすでに「人が定着できる土台」があります。あとは採用の精度を上げるだけ。弊社では以下の3つで貢献できます。',
+    service_items: [
+      { title: '職場文化を正確に反映した採用ブランディング', body: 'あなたが大切にしている雰囲気・価値観・関係性を求人票・SNS・採用メッセージに正確に落とし込みます。「ここで働きたい」と感じる候補者を引き寄せます。' },
+      { title: '定期採用の仕組み化・求人運用代行', body: '場当たり的な採用から脱却し、計画的に採用活動を回せる仕組みを構築します。Indeed運用・応募者対応・日程調整まで一括代行します。' },
+      { title: '入職後フォロー面談による定着率の見える化', body: '入職後30・60・90日のフォローアップ面談設計で、スタッフの満足度と不安を早期に把握。離職を未然に防ぐ仕組みを整えます。' },
+    ],
+    cta_headline: '良い組織の土台があるなら、あとは採用の精度を上げるだけです',
+    deep_psych: {
+      praise: '人の気持ちに寄り添い、一人ひとりを大切にするあなたの姿勢は、リーダーとしての本質的な強さです。スタッフが「ここにいたい」と思える環境を作れる人は、実はとても少ない。あなたの共感力は、本物の才能です。',
+      insight: 'ただ、一つ正直に問いかけさせてください。<strong>あなたの「優しさ」の中に、「嫌われることへの恐れ」が混じっていないでしょうか。</strong>スタッフに厳しいことを言えないのは「相手のため」だけではなく、「関係が壊れることへの不安」から来ている部分があるかもしれません。\n\n「NO」と言えない、厳しい要求ができない——それは思いやりではなく、<strong>自分を守るための「優しさの鎧」</strong>になっていることがあります。本当の育成とは、時に相手が嫌がることを言う勇気です。それができたとき、あなたはさらに大きなリーダーになれます。',
+    },
+  },
+  type5: {
+    emoji: '🚀',
+    name: '組織経営者院長タイプ',
+    catchcopy: '「経営×組織の両立ができている、最も理想に近い院長像。次のステージへ。」',
+    staff_view: `スタッフの目には、あなたは「頼れて、ビジョンがある先生」として映っている可能性が高いです。経営的な視点を持ちながらスタッフへの関与も怠らないあなたのスタイルは、スタッフに「ここで働き続けたい」という動機を与えています。\n\n一方で、医院が成長フェーズに入ると「スタッフの成長速度が追いついていない」という課題が出てきやすいタイプでもあります。採用の質と量をさらに高めることが、次の壁を越えるカギになります。`,
+    strengths: [
+      'ビジョン・数値・組織の三位一体で動ける、経営者として成熟したスタイル',
+      'スタッフが自走できる仕組みを作る意識がある',
+      '採用・定着・育成への投資意欲があり、組織が持続成長しやすい',
+    ],
+    cautions: [
+      '完成度が高い分、スタッフへの期待値が高くなりすぎることがある',
+      '仕組みが整うと「マンネリ感」が出始め、優秀なスタッフが次のステージを求めて離職することがある',
+      '採用においては、「仕組みを壊して改善できる人材」も必要になってくる',
+    ],
+    actions: [
+      { title: 'スタッフのキャリアビジョンを定期的に確認する', body: '「5年後どうなりたいか」を面談で確認し、医院の成長と個人の成長を重ねる設計をしましょう。' },
+      { title: '採用の質をさらに高める', body: '次のフェーズで必要な人材像を今から設計しておくことで、採用活動が先手に変わります。' },
+      { title: '中間リーダーの育成に投資する', body: '院長一人への依存から脱却し、現場をまとめられるリーダー層を育てることが次のステージの課題です。' },
+    ],
+    service_intro: '採用の「量の確保」から「質の精度向上」へ。次のフェーズに必要な人材を確実に確保するために、弊社では以下の3つで貢献できます。',
+    service_items: [
+      { title: '成長フェーズに合わせた採用ペルソナの再設計', body: '今の医院規模・組織フェーズに合った「採用すべき人物像」を再定義します。過去の採用基準を見直し、次のステージで活躍できる人材との出会いを設計します。' },
+      { title: 'スカウト型・リファラル採用の導入支援', body: '求人を待つ採用から、こちらから動く採用へ。スカウト媒体の活用やリファラル採用の仕組み化を支援し、質の高い候補者との接点を増やします。' },
+      { title: '早期戦力化オンボーディングプログラム', body: '入職後に即戦力として活躍してもらうための受け入れ設計・評価連動プログラムを構築。採用コストの回収速度を上げ、組織成長のサイクルを加速させます。' },
+    ],
+    cta_headline: '次のフェーズに必要な人材採用を、今から一緒に設計しませんか？',
+    deep_psych: {
+      praise: '経営と組織の両輪を回し、数値も人も同時に見ることができる。それは多くの院長が辿り着けない、本当の意味での経営者の姿です。あなたが築いてきた仕組みと文化は、医院の大きな財産です。',
+      insight: 'ただ、一点だけ踏み込ませてください。<strong>「全てをコントロールできていないと落ち着かない」という感覚はありませんか。</strong>仕組みを作り、数値で管理し、予測可能な状態を保とうとする裏に、「感情や関係性という予測できないもの」への苦手意識が隠れているかもしれません。\n\nスタッフとの深い関係性よりも、役割と成果で人を捉えてしまう傾向があるとすれば、<strong>優秀なスタッフほど「管理されている」と感じて離れていく</strong>可能性があります。論理で動かせる組織の限界は、人間が感情で動くという事実にあります。',
+    },
+  },
+  type6: {
+    emoji: '😮‍💨',
+    name: '奮闘燃え尽き院長タイプ',
+    catchcopy: '「頑張っているのに、なぜか報われない。その消耗のサイクル、今すぐ止める必要があります。」',
+    staff_view: `スタッフの目には、あなたは「いつも忙しそうで、追い詰められている先生」として映っている可能性があります。あなたの頑張りは本物ですが、その疲弊感がスタッフにも伝わり、「この職場にいると自分も消耗するかもしれない」という不安感を生んでいることがあります。\n\nスタッフが辞める理由として「院長が大変そうで、将来像が見えない」「自分が貢献できている感じがしない」というものが多いのが、このタイプの特徴です。`,
+    strengths: [
+      '誰よりも医院のことを考え、責任感が強い',
+      '問題意識が高く、「何かを変えなければ」という自覚がある',
+      '変化への意欲があるため、適切なサポートが入ると急速に改善しやすい',
+    ],
+    cautions: [
+      '「全部自分でやらなければ」という思い込みが、委任を妨げている',
+      '採用・育成・定着のどれも中途半端になりやすく、根本解決に至らない',
+      'スタッフへの関与が「指示・対応」になりがちで、育成や関係構築に時間を割けていない',
+      '「また採用しなければ」という消耗のサイクルが止まっていない',
+    ],
+    actions: [
+      { title: '「採用で解決しようとしている問題」を整理する', body: '採用しても定着しない場合、問題は採用ではなく職場環境にあることが多いです。「なぜ辞めるのか」を直視することが、最初の一歩です。' },
+      { title: '自分が抱えている業務を書き出し、「任せるもの」を1つ決める', body: '全部を変えようとするより、まず1つだけ任せることから始めましょう。小さな委任の成功体験が、組織を変えていきます。' },
+      { title: '採用基準を「長く働いてくれる人」に再設定する', body: 'スキルよりも「価値観の合致」「定着意欲」を採用基準の上位に置くことで、採用の消耗サイクルが変わります。' },
+    ],
+    service_intro: '一人で抱え込む採用業務を外部に移し、院長が診療と経営に集中できる環境を作ります。弊社では以下の3つで貢献できます。',
+    service_items: [
+      { title: '採用業務の完全代行（求人〜面接調整まで）', body: '求人票作成・Indeed運用・応募者対応・面接日程調整まですべて代行します。院長の採用にかかる時間をゼロに近づけ、本来の仕事に集中できる環境を作ります。' },
+      { title: '離職原因の特定と職場環境の改善サポート', body: '「なぜ辞めるのか」を構造的に分析し、採用ではなく環境側の課題を特定します。根本原因に手を打つことで、採用→離職の消耗サイクルを止めます。' },
+      { title: '入職後フォローによる定着支援プログラム', body: '採用して終わりにしません。入職後30・60・90日のフォロー面談と定着支援で「また辞めた」を防ぎます。スタッフが長く働き続ける仕組みを一緒に作ります。' },
+    ],
+    cta_headline: '消耗のサイクルを、今すぐ一緒に断ち切りましょう。',
+    deep_psych: {
+      praise: 'ここまで読んできたあなたは、本当に真剣に医院のことを考えている。その責任感と誠実さは、本物です。誰もが「もういいや」と思うところで、それでも踏ん張り続けているあなたを、まず認めてほしいと思います。',
+      insight: 'ただ、あえて聞かせてください。<strong>「助けを求めることへの罪悪感」を感じたことはありませんか。</strong>院長だから、頼ってはいけない。弱音を吐いてはいけない——そんな思い込みが、あなたを一人で抱え込ませている可能性があります。\n\n「自分でやらなければ」の裏には、<strong>「頼ったら負け」「弱みを見せたら信頼を失う」という孤独な信念</strong>が潜んでいることが多いです。でも本当のことを言うと——周囲に頼れる院長の方が、スタッフからは信頼されます。完璧でいようとするほど、人は離れていきます。',
+    },
+  },
+};
+
+// ===================== BUILD QUIZ =====================
+const answers = {};
+let totalQ = 0;
+function buildQuiz() {
+  const container = document.getElementById('questions-container');
+  let qIndex = 1;
+  SECTIONS.forEach(sec => {
+    const hdr = document.createElement('div');
+    hdr.className = 'section-label';
+    hdr.innerHTML = `<span class="section-label-badge">${sec.label}</span><span class="section-label-text">${sec.desc}</span>`;
+    container.appendChild(hdr);
+    sec.questions.forEach((qText, i) => {
+      const key = `${sec.id}-${i}`;
+      totalQ++;
+      const card = document.createElement('div');
+      card.className = 'q-card';
+      card.id = `card-${key}`;
+      const scaleHTML = [1,2,3,4,5].map(v => `
+        <label class="scale-btn">
+          <input type="radio" name="${key}" value="${v}" onchange="onAnswer('${key}', ${v})">
+          <span class="scale-circle">${v}</span>
+        </label>`).join('');
+      card.innerHTML = `
+        <div class="q-num">Q${qIndex}</div>
+        <div class="q-text">${qText}</div>
+        <div class="scale-wrap">${scaleHTML}</div>
+        <div class="scale-labels"><span>全くそうは思わない</span><span>大変そう思う</span></div>
+      `;
+      container.appendChild(card);
+      qIndex++;
+    });
+  });
+  const submitArea = document.createElement('div');
+  submitArea.className = 'submit-area';
+  submitArea.innerHTML = `
+    <p class="submit-note">全ての質問に回答してから診断を開始してください</p>
+    <button class="btn-submit" onclick="showResult()">診断結果を見る →</button>
+    <p class="warn" id="warn-msg">⚠ まだ回答していない質問があります</p>
+  `;
+  container.appendChild(submitArea);
+}
+
+function onAnswer(key, value) {
+  answers[key] = value;
+  const card = document.getElementById(`card-${key}`);
+  if (card) card.classList.add('answered');
+  updateProgress();
+}
+
+function updateProgress() {
+  const count = Object.keys(answers).length;
+  const pct = Math.round(count / totalQ * 100);
+  document.getElementById('prog-text').textContent = `${count} / ${totalQ} 問 回答済み`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-bar').style.width = pct + '%';
+}
+
+// ===================== SCORING =====================
+function calcScores() {
+  const sums = { A: 0, B: 0, C: 0, D: 0 };
+  SECTIONS.forEach(sec => {
+    if (sec.id === 'Z') return;
+    sec.questions.forEach((_, i) => {
+      const key = `${sec.id}-${i}`;
+      let v = parseInt(answers[key] || 3);
+      if (REVERSE[key]) v = 6 - v;
+      sums[sec.id] = (sums[sec.id] || 0) + v;
+    });
+  });
+  return sums;
+}
+
+function determineType(s) {
+  const lv = id => s[id] >= 22 ? 'H' : s[id] >= 14 ? 'M' : 'L';
+  const A = lv('A'), B = lv('B'), C = lv('C'), D = lv('D');
+  if (A === 'H' && B === 'H' && (C === 'L' || C === 'M')) return 'type5';
+  if (B === 'H' && C === 'L') return 'type4';
+  if (A === 'H' && C === 'H') return 'type2';
+  if (B === 'L' && C === 'H' && D === 'H') return 'type1';
+  if (B === 'L' && C === 'H') return 'type3';
+  if (C === 'H' && D === 'H') return 'type6';
+  if (C === 'H') return 'type6';
+  return 'type4';
+}
+
+// ===================== SHOW RESULT =====================
+let currentType = null;
+
+function showResult() {
+  const answered = Object.keys(answers).length;
+  if (answered < totalQ) {
+    document.getElementById('warn-msg').style.display = 'block';
+    SECTIONS.forEach(sec => {
+      sec.questions.forEach((_, i) => {
+        const key = `${sec.id}-${i}`;
+        if (!answers[key]) {
+          const card = document.getElementById(`card-${key}`);
+          if (card) { card.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+        }
+      });
+    });
+    return;
+  }
+
+  const scores = calcScores();
+  const typeKey = determineType(scores);
+  currentType = TYPES[typeKey];
+  const type = currentType;
+
+  // ヒーロー
+  document.getElementById('r-emoji').textContent = type.emoji;
+  document.getElementById('r-name').textContent = type.name;
+  document.getElementById('r-catch').textContent = type.catchcopy;
+
+  // スコアバー
+  document.getElementById('val-a').textContent = scores.A + '/30';
+  document.getElementById('val-b').textContent = scores.B + '/30';
+  document.getElementById('val-c').textContent = scores.C + '/30';
+  document.getElementById('val-d').textContent = scores.D + '/30';
+
+  // ちょい出し：スタッフからの見られ方（最初の1文のみ）
+  const firstSentence = type.staff_view.split('。')[0] + '。';
+  document.getElementById('teaser-staff-view').textContent = firstSentence;
+
+  // 解除後コンテンツを先に準備（hidden）
+  document.getElementById('full-staff-view').innerHTML = type.staff_view.replace(/\n/g, '<br><br>');
+  document.getElementById('full-strengths').innerHTML = type.strengths.map(s => `<li>${s}</li>`).join('');
+  document.getElementById('full-cautions').innerHTML = type.cautions.map(c => `<li>${c}</li>`).join('');
+  document.getElementById('full-actions').innerHTML = type.actions.map(a => `
+    <div class="action-item">
+      <strong>▶ ${a.title}</strong>
+      <p>${a.body}</p>
+    </div>`).join('');
+  document.getElementById('full-psych-praise').textContent = type.deep_psych.praise;
+  document.getElementById('full-psych-insight').innerHTML = type.deep_psych.insight.replace(/\n/g, '<br><br>');
+  document.getElementById('full-service-intro').textContent = type.service_intro;
+  document.getElementById('full-service-items').innerHTML = type.service_items.map((item, i) => `
+    <div class="service-item">
+      <div class="service-item-num">${i + 1}</div>
+      <div class="service-item-body">
+        <strong>${item.title}</strong>
+        <p>${item.body}</p>
+      </div>
+    </div>`).join('');
+  document.getElementById('full-cta-headline').textContent = type.cta_headline;
+
+  // 画面切り替え
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  window.scrollTo(0, 0);
+
+  // バーアニメーション
+  setTimeout(() => {
+    document.getElementById('bar-a').style.width = (scores.A / 30 * 100) + '%';
+    document.getElementById('bar-b').style.width = (scores.B / 30 * 100) + '%';
+    document.getElementById('bar-c').style.width = (scores.C / 30 * 100) + '%';
+    document.getElementById('bar-d').style.width = (scores.D / 30 * 100) + '%';
+  }, 200);
+}
+
+// ===================== WEBHOOK URL =====================
+// ↓ Google Apps Script をデプロイしたら、URLをここに貼り付けてください
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbygSOaCM8c3HJNnnBrCZ8oj9XBLYz-Iwcc6kObj7OJ4XawGlkliP63yeK0SVdyM6delvQ/exec';
+
+// ===================== UNLOCK (Webhook送信) =====================
+async function submitUnlock(e) {
+  e.preventDefault();
+
+  const name   = document.getElementById('f-name').value;
+  const clinic = document.getElementById('f-clinic').value;
+  const email  = document.getElementById('f-email').value;
+
+  // 全25問の回答をフラットに整形
+  const answersFlat = {};
+  let qNum = 1;
+  SECTIONS.forEach(sec => {
+    sec.questions.forEach((_, i) => {
+      answersFlat['q' + qNum] = parseInt(answers[`${sec.id}-${i}`] || 3);
+      qNum++;
+    });
+  });
+
+  const scores  = calcScores();
+  const typeKey = determineType(scores);
+
+  const payload = {
+    timestamp : new Date().toISOString(),
+    name,
+    clinic,
+    email,
+    type_key  : typeKey,
+    type_name : TYPES[typeKey].name,
+    score_a   : scores.A,
+    score_b   : scores.B,
+    score_c   : scores.C,
+    score_d   : scores.D,
+    ...answersFlat
+  };
+
+  // ゲート・ティーザーを隠してローディング表示
+  document.getElementById('unlock-gate').style.display = 'none';
+  document.querySelector('.teaser-block').style.display = 'none';
+  const loadingEl = document.getElementById('loading-area');
+  loadingEl.style.display = 'block';
+  loadingEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // ステップアニメーション
+  setTimeout(() => {
+    document.getElementById('step1').classList.remove('step-active');
+    document.getElementById('step2').classList.add('step-active');
+  }, 2500);
+  setTimeout(() => {
+    document.getElementById('step2').classList.remove('step-active');
+    document.getElementById('step3').classList.add('step-active');
+  }, 6000);
+
+  // GASへ送信（no-cors: レスポンスは読めないが送信はされる）
+  try {
+    await fetch(WEBHOOK_URL, {
+      method : 'POST',
+      mode   : 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(payload)
+    });
+  } catch (_) {
+    // CORS エラーは無視（GASは no-cors で正常動作）
+  }
+
+  // 完了表示（GASの処理時間を考慮して8秒後に切り替え）
+  setTimeout(() => {
+    loadingEl.style.display = 'none';
+    const successEl = document.getElementById('success-area');
+    successEl.style.display = 'block';
+    successEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 8000);
+}
+
+// ===================== INIT =====================
+buildQuiz();
+</script>
+</body>
+</html>
