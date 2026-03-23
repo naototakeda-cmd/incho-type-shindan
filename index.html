@@ -1360,7 +1360,7 @@ function showResult() {
 
 // ===================== WEBHOOK URL =====================
 // ↓ Google Apps Script をデプロイしたら、URLをここに貼り付けてください
-const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxJ4pJGlG0JTq_RObWf1DVfbifkJfykXnsM0FbocAtfa9r2qtya-GwznELr4CQn6V00Uw/exec';
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbygSOaCM8c3HJNnnBrCZ8oj9XBLYz-Iwcc6kObj7OJ4XawGlkliP63yeK0SVdyM6delvQ/exec';
 
 // ===================== UNLOCK (Webhook送信) =====================
 async function submitUnlock(e) {
@@ -1414,12 +1414,14 @@ async function submitUnlock(e) {
     document.getElementById('step3').classList.add('step-active');
   }, 6000);
 
-  // GASへ送信（no-cors: Content-Typeヘッダーを省略することでtext/plainとして送信され、プリフライトを回避）
+  // GASへ送信（URLSearchParams方式：application/x-www-form-urlencoded でプリフライト不要）
   try {
+    const formData = new URLSearchParams();
+    formData.append('payload', JSON.stringify(payload));
     await fetch(WEBHOOK_URL, {
       method : 'POST',
       mode   : 'no-cors',
-      body   : JSON.stringify(payload)
+      body   : formData
     });
   } catch (_) {
     // CORS エラーは無視（GASは no-cors で正常動作）
