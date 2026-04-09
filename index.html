@@ -816,6 +816,17 @@
       </div>
     </div>
 
+    <!-- ちょい出し：深層心理（冒頭2文のみ） -->
+    <div class="teaser-block" style="margin-top:16px;">
+      <div class="result-block-header">
+        <div class="result-block-icon" style="background:#f3e8ff">🔮</div>
+        <div class="result-block-title">あなたの深層心理</div>
+      </div>
+      <div class="teaser-text-wrap">
+        <p id="teaser-deep-psych"></p>
+      </div>
+    </div>
+
     <!-- アンロックゲート -->
     <div id="unlock-gate">
       <p class="locked-preview-label">▼ 残り4項目はメール登録で解除されます</p>
@@ -939,10 +950,11 @@
     <!-- ===== 送信完了 ===== -->
     <div class="success-area" id="success-area">
       <span class="success-icon">📬</span>
-      <div class="success-title">レポートを送信しました！</div>
+      <div class="success-title">受付完了しました！</div>
       <div class="success-sub">
         ご登録のメールアドレスに<br>
-        個別診断レポートをお送りしました。
+        <strong>1〜2分後</strong>に個別診断レポートをお送りします。<br>
+        このページを閉じていただいて大丈夫です。
       </div>
       <div class="success-info-box">
         <p>
@@ -956,8 +968,7 @@
         </p>
       </div>
       <div class="success-sub" style="font-size:12px;color:#a0aec0;">
-        ※ メールが届かない場合は迷惑メールフォルダをご確認ください<br>
-        ※ 担当者より2営業日以内にご連絡いたします
+        ※ メールが届かない場合は迷惑メールフォルダをご確認ください
       </div>
     </div>
 
@@ -1344,6 +1355,11 @@ function showResult() {
   const firstSentence = type.staff_view.split('。')[0] + '。';
   document.getElementById('teaser-staff-view').textContent = firstSentence;
 
+  // ちょい出し：深層心理（praseの最初の2文のみ）
+  const psychSentences = type.deep_psych.praise.split('。').filter(s => s.trim());
+  const psychTeaser = psychSentences.slice(0, 2).join('。') + '。';
+  document.getElementById('teaser-deep-psych').textContent = psychTeaser;
+
   // 画面切り替え
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('result').style.display = 'block';
@@ -1360,7 +1376,7 @@ function showResult() {
 
 // ===================== WEBHOOK URL =====================
 // ↓ Google Apps Script をデプロイしたら、URLをここに貼り付けてください
-const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzox9VKXyOgkRndosCZbbb10pin6cQ7xUrt3tgOvGAqRhtNlLWRLgoHkk0F2_23U2qjAQ/exec';
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbygSOaCM8c3HJNnnBrCZ8oj9XBLYz-Iwcc6kObj7OJ4XawGlkliP63yeK0SVdyM6delvQ/exec';
 
 // ===================== UNLOCK (Webhook送信) =====================
 async function submitUnlock(e) {
@@ -1399,41 +1415,29 @@ async function submitUnlock(e) {
 
   // ゲート・ティーザーを隠してローディング表示
   document.getElementById('unlock-gate').style.display = 'none';
-  document.querySelector('.teaser-block').style.display = 'none';
+  document.querySelectorAll('.teaser-block').forEach(el => el.style.display = 'none');
   const loadingEl = document.getElementById('loading-area');
   loadingEl.style.display = 'block';
   loadingEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  // ステップアニメーション
-  setTimeout(() => {
-    document.getElementById('step1').classList.remove('step-active');
-    document.getElementById('step2').classList.add('step-active');
-  }, 2500);
-  setTimeout(() => {
-    document.getElementById('step2').classList.remove('step-active');
-    document.getElementById('step3').classList.add('step-active');
-  }, 6000);
-
-  // GASへ送信（URLSearchParams方式：application/x-www-form-urlencoded でプリフライト不要）
+  // GASへバックグラウンド送信（完了を待たず即座に完了画面を表示）
   try {
     const formData = new URLSearchParams();
     formData.append('payload', JSON.stringify(payload));
-    await fetch(WEBHOOK_URL, {
+    fetch(WEBHOOK_URL, {
       method : 'POST',
       mode   : 'no-cors',
       body   : formData
     });
-  } catch (_) {
-    // CORS エラーは無視（GASは no-cors で正常動作）
-  }
+  } catch (_) {}
 
-  // 完了表示（GASの処理時間を考慮して8秒後に切り替え）
+  // 即座に完了画面を表示（ページを閉じても問題ない）
   setTimeout(() => {
     loadingEl.style.display = 'none';
     const successEl = document.getElementById('success-area');
     successEl.style.display = 'block';
     successEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 8000);
+  }, 1500);
 }
 
 // ===================== INIT =====================
